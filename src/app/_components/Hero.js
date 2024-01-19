@@ -3,11 +3,11 @@ import { useState } from "react"
 import Link from "next/link"
 import Container from "./Container"
 import Image from "next/image"
-import heroImg from "../../../public/img/tk-cards.jpg"
+
 const Hero = ({data}) => {
 
 
-const{title,description,cta_button_text,picture}=data;
+const{title,description,cta_button_text,picture,cta_button_link}=data;
     return (
         <Container className="flex flex-wrap pt-28 pb-18">
         <div className="flex items-center w-full lg:w-1/2 lg:px-10">
@@ -21,7 +21,7 @@ const{title,description,cta_button_text,picture}=data;
 
             <div className="flex flex-col items-start space-y-3 sm:space-x-4 sm:space-y-0 sm:items-center sm:flex-row">
               <Link
-                href="#contact"
+                href={cta_button_link}
                 className="px-7 py-3 text-white text-xl bg-indigo-600 rounded-md"
               >
                 {cta_button_text}
