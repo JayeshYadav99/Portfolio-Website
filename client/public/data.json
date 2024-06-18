@@ -1,0 +1,192 @@
+{
+    "story": {
+      "name": "Home Page",
+      "content": {
+        "Faq": [],
+        "Hero": [
+          {
+            "title": "Full Stack Developer",
+            "picture": {
+              "alt": "",
+              "name": "",
+              "focus": "",
+              "title": "",
+              "source": "",
+              "filename": "https://a.storyblok.com/f/271727/460x460/e1c7f2b157/107855172.jpg",
+              "copyright": "",
+              "fieldtype": "asset",
+              "meta_data": {},
+              "is_private": "",
+              "is_external_url": false
+            },
+            "component": "Hero",
+            "description": "Experienced Full Stack Developer with a strong foundation in Node.js, Express.js, React.js, and Next.js. Proven ability to thrive in fast-paced environments, demonstrated by winning MLH hackathons and crafting innovative solutions using various APIs. Proficient in advanced technologies such as Langchain, Vector Databases, and AI workflows. A dedicated learner with a track record of delivering dynamic web applications and continuously adapting to evolving technologies.",
+            "cta_button_link": "https://drive.google.com/file/d/1o6VO6jtrWZG8fshEQgkhi614H5CAF317/view?usp=sharing",
+            "cta_button_text": "View Resume"
+          }
+        ],
+        "Footer": [],
+        "Contact": [
+          {
+            "email": "jayeshyadav528@gmail.com",
+            "title": "Feel Free to Connect",
+            "component": "Contact",
+            "githubProfile": "JayeshYadav99",
+            "linkedinProfile": "yadavjayeshdev5892"
+          }
+        ],
+        "Services": [
+          {
+            "title": "Recent Projects",
+            "component": "Services",
+            "service_cards": [
+                {
+                    "title": "Chat with Data",
+                    "subtitle": "AI-powered document processing and conversation platform",
+                    "FrameWork": "Langchain, Next.js, Vercel, Supabase",
+                    "component": "service_cards",
+                    "ProjectLink": "https://chat-with-data-bice.vercel.app/",
+                    "description": "Chat with Data allows users to upload PDF documents, process them through an AI workflow, and engage in conversations about the content. The platform utilizes Langchain for document analysis, Next.js with Vercel AI SDK for handling, and Supabase for storing vector embeddings. Secure storage is managed using Vercel Blob Storage.",
+                    "image":"/img/Chat-with-data.png"
+                  }
+                  ,
+              {
+                "title": "E-commmerce-Website",
+                "subtitle": "The transparent website to purchase grocery products",
+                "FrameWork": "MERN STACK",
+                "component": "service_cards",
+                "ProjectLink": "https://transparentshopping.onrender.com/",
+                "description": "It is different from normal ecommerce website to provide a transparent and clear info about product to consumer to make informed decision",
+                  "image":"/img/Ecommerce.png"
+              },
+              {
+                "title": "ElectiveHub",
+                "subtitle": "Subject selection tool for students and teachers",
+                "FrameWork": "MERN STACK",
+                "component": "service_cards",
+                "ProjectLink": "https://electivehub.onrender.com/",
+                "description": "ElectiveHub streamlines education management, simplifying student info and elective choices. A user-friendly platform for students, teachers, and administrators to enhance academic processes efficiently.",
+                "image":"/img/ElectiveHub.png"
+                
+              },
+              {
+                "title": "Endless-Running-Game",
+                "subtitle": "Are you ready to test your skills and have a good laugh at the same time? Look no further, Endless-Running-Game is the game for you!",
+                "FrameWork": "HTML CANVAS AND VANILLA JS",
+                "component": "service_cards",
+                "ProjectLink": "https://jayeshyadav99.github.io/Endless-Running",
+                "description": "Soar through the sky, dodging ravens to score high, but beware collisions for explosive chuckles on your path to victory!",
+                "image":"/img/Game.png"
+              }
+            ]
+          }
+        ],
+        "Nav_Section": [
+          {
+            "title": "Jayesh Yadav",
+            "component": "NAVIGATION",
+            "cta_button_text": "Ready to Work"
+          }
+        ],
+        "Achievements": [
+          {
+            "title": "Achievements",
+            "component": "Achievements",
+            "Achievement_cards": [
+              {
+                "Name": "Code Unnati Innovation Marathon 2.0",
+                "comment": "Presented our Project SaamvaadSync at Code Unnati Marathon 2.0 Final as top 25 teams ",
+                "picture": {
+                  "alt": "",
+                  "name": "",
+                  "focus": "",
+                  "title": "",
+                  "source": "",
+                  "filename": "/img/SamvaadSynct.PNG",
+                  "copyright": "",
+                  "fieldtype": "asset",
+                  "meta_data": {},
+                  "is_private": "",
+                  "is_external_url": false
+                },
+                "component": "Achievement_cards"
+              },
+              {
+                "Name": "Best Use of Vonage APIs at HackthisFall",
+                "comment": "Awarded for best project utilizing Vonage Video API to enable live translated captions during video calls via Audio connector ",
+                "picture": {
+                  "alt": "",
+                  "name": "",
+                  "focus": "",
+                  "title": "",
+                  "source": "",
+                  "filename": "/img/Vonage.jpg",
+                  "copyright": "",
+                  "fieldtype": "asset",
+                  "meta_data": {},
+                  "is_private": "",
+                  "is_external_url": false
+                },
+                "component": "Achievement_cards"
+              },
+              {
+                "Name": "ChatHacks",
+                "comment": "Secured 1st place in the hackathon, showcasing effective teamwork and problem-solving abilities and using ALAN AI to elevate our project",
+                "picture": {
+                  "alt": "",
+                  "name": "",
+                  "focus": "",
+                  "title": "",
+                  "source": "",
+                  "filename": "https://a.storyblok.com/f/271727/338x374/f49ae252c8/laughhub.PNG",
+                  "copyright": "",
+                  "fieldtype": "asset",
+                  "meta_data": {},
+                  "is_private": "",
+                  "is_external_url": false
+                },
+                "component": "Achievement_cards"
+              },
+              {
+                "Name": "PortfolioHub",
+                "comment": "Acquired practical knowledge in building dynamic web pages using React for a personalized portfolio.",
+                "picture": {
+                  "alt": "",
+                  "name": "",
+                  "focus": "",
+                  "title": "",
+                  "source": "",
+                  "filename": "https://a.storyblok.com/f/271727/352x390/f7d810cb83/portfoliohub.PNG",
+                  "copyright": "",
+                  "fieldtype": "asset",
+                  "meta_data": {},
+                  "is_private": "",
+                  "is_external_url": false
+                },
+                "component": "Achievement_cards"
+              },
+              {
+                "Name": "Won Best Use of WriteSonic at Unstop Hackthon",
+                "comment": "Awarded for best project utilizing WriteSonic API to generate creative content for marketing purposes.",
+                "picture": {
+                  "alt": "",
+                  "name": "",
+                  "focus": "",
+                  "title": "",
+                  "source": "",
+                  "filename": "/img/Contentify.PNG",
+                  "copyright": "",
+                  "fieldtype": "asset",
+                  "meta_data": {},
+                  "is_private": "",
+                  "is_external_url": false
+                },
+                "component": "Achievement_cards"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+  
