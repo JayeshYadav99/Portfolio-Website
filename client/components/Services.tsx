@@ -31,9 +31,10 @@ const Services = ({ data }:any) => {
       <div className="flex flex-col p-6 lg:mx-1 sm:mx-auto max-w-lg text-center rounded-lg border shadow border-gray-600 xl:p-8 text-white bg-neutral-800 mx-auto">
         <h3 className="mb-4 text-2xl font-semibold">{title}</h3>
         {image && (
-          <img
+          <Image
             src={image}
             alt={title}
+            width="400" height="400"
             className="w-full h-48 object-cover rounded-t-lg mb-4"
           />
         )}
