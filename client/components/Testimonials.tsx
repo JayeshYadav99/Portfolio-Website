@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const Testimonials = ({ data }) => {
+const Testimonials = ({ data }:any) => {
   const { title, Achievement_cards } = data;
 
   return (
@@ -17,7 +17,7 @@ const Testimonials = ({ data }) => {
 
 export default Testimonials;
 
-const TestimonialCard = ({ data }) => {
+const TestimonialCard = ({ data }:any) => {
   const { picture, Name, comment } = data;
   return (
     <div className="lg:col-span-2 xl:col-auto">
@@ -29,7 +29,7 @@ const TestimonialCard = ({ data }) => {
   );
 };
 
-const Avatar = ({ image, name }) => {
+const Avatar = ({ image, name }:any) => {
   return (
     <div className="flex items-center mt-4 space-x-4">
       <div className="flex-shrink-0 overflow-hidden rounded-full w-12 h-12 border-2 border-gray-300">
