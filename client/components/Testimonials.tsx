@@ -7,7 +7,7 @@ const Testimonials = ({ data }:any) => {
     <section className="px-6 sm:px-12 lg:px-24 bg-zinc-950 pt-24 pb-32">
       <h2 className="text-4xl font-bold text-center text-white mb-20">{title}</h2>
       <div className="grid gap-10 lg:grid-cols-2 xl:grid-cols-2">
-        {Achievement_cards.map((t) => (
+        {Achievement_cards.map((t:any) => (
           <TestimonialCard data={t} key={t.Name} />
         ))}
       </div>
