@@ -5,7 +5,7 @@ import { FaLinkedin, FaGithub } from 'react-icons/fa';
 
 
 import Link from "next/link";
-const ContactSection = ({ data }) => {
+const ContactSection = ({ data }:any) => {
   //   const { title, description, email, phone, location } = data;
   
   const{title,email,linkedinProfile,githubProfile}=data;
