@@ -47,7 +47,7 @@
                     "component": "service_cards",
                     "ProjectLink": "https://chat-with-data-bice.vercel.app/",
                     "description": "Chat with Data allows users to upload PDF documents, process them through an AI workflow, and engage in conversations about the content. The platform utilizes Langchain for document analysis, Next.js with Vercel AI SDK for handling, and Supabase for storing vector embeddings. Secure storage is managed using Vercel Blob Storage.",
-                    "image":"/img/Chat-with-data.png"
+                    "image":"/img/Chat-with-datdemo.png"
                   }
                   ,
               {
@@ -57,7 +57,7 @@
                 "component": "service_cards",
                 "ProjectLink": "https://transparentshopping.onrender.com/",
                 "description": "It is different from normal ecommerce website to provide a transparent and clear info about product to consumer to make informed decision",
-                  "image":"/img/Ecommerce.png"
+                  "image":"/img/Ecommercedemo.png"
               },
               {
                 "title": "ElectiveHub",
@@ -66,7 +66,7 @@
                 "component": "service_cards",
                 "ProjectLink": "https://electivehub.onrender.com/",
                 "description": "ElectiveHub streamlines education management, simplifying student info and elective choices. A user-friendly platform for students, teachers, and administrators to enhance academic processes efficiently.",
-                "image":"/img/ElectiveHub.png"
+                "image":"/img/ElectiveHubdemo.png"
                 
               },
               {
@@ -76,7 +76,7 @@
                 "component": "service_cards",
                 "ProjectLink": "https://jayeshyadav99.github.io/Endless-Running",
                 "description": "Soar through the sky, dodging ravens to score high, but beware collisions for explosive chuckles on your path to victory!",
-                "image":"/img/Game.png"
+                "image":"/img/Gamedemo.png"
               }
             ]
           }
@@ -102,7 +102,7 @@
                   "focus": "",
                   "title": "",
                   "source": "",
-                  "filename": "/img/SamvaadSynct.png",
+                  "filename": "/img/SamvaadSynctdemo.png",
                   "copyright": "",
                   "fieldtype": "asset",
                   "meta_data": {},
@@ -174,7 +174,7 @@
                   "focus": "",
                   "title": "",
                   "source": "",
-                  "filename": "/img/Contentify.png",
+                  "filename": "/img/Contentifydemo.png",
                   "copyright": "",
                   "fieldtype": "asset",
                   "meta_data": {},
