@@ -35,7 +35,7 @@ const Navbar = ({data}:any) => {
     </button>
   </div>
 </div>
-    <nav className="container  relative flex flex-wrap items-center justify-between p-8 mx-auto lg:justify-between xl:px-0">
+    {/* <nav className="container  relative flex flex-wrap items-center justify-between p-8 mx-auto lg:justify-between xl:px-0">
       <div className="flex flex-wrap items-center justify-between w-full lg:w-auto">
         
         <Link href="/" className="flex items-center mx-32">
@@ -47,7 +47,7 @@ const Navbar = ({data}:any) => {
       </div>
 
       
-    </nav>
+    </nav> */}
   </div>
   )
 }

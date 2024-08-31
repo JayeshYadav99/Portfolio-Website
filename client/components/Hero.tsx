@@ -9,10 +9,10 @@ const Hero = ({data}:any) => {
 
 const{title,description,cta_button_text,picture,cta_button_link}=data;
     return (
-        <Container className="flex flex-wrap pt-28 pb-18">
+        <Container className="flex flex-wrap  pb-18">
         <div className="flex items-center w-full lg:w-1/2 lg:px-10">
           <div className="max-w-2xl mb-8 pr-3">
-            <h1 className="text-4xl font-bold leading-snug tracking-tight lg:text-4xl lg:leading-tight xl:text-6xl xl:leading-tight text-white">
+            <h1 className="text-3xl font-bold leading-snug tracking-tight lg:text-4xl lg:leading-tight xl:text-3xl xl:leading-tight text-white">
               {title}
             </h1>
             <p className="py-5 text-xl leading-normal lg:text-xl xl:text-2xl text-gray-300">
@@ -57,7 +57,7 @@ const{title,description,cta_button_text,picture,cta_button_link}=data;
           <Image
             src={picture.filename}
             width="529"
-            height="529"
+            height="429"
             className="object-cover rounded-full lg:inline"
             alt="Tuomo Kankaanpää"
             loading="eager"
