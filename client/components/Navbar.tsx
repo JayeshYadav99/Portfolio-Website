@@ -1,55 +1,101 @@
+'use client'
 
+import { useState, useEffect } from 'react'
 import Link from "next/link"
-const Navbar = ({data}:any) => {
-    const{title,cta_button_text}=data;
+import { motion, useAnimation } from 'framer-motion'
+import { Code, Server, Database, Cloud, Terminal, Cpu } from 'lucide-react'
+
+const CoolBanner = ({ data }: { data: any }) => {
+  const { title, cta_button_text } = data
+  const [isHovered, setIsHovered] = useState(false)
+  const controls = useAnimation()
+
+  useEffect(() => {
+    controls.start({
+      background: isHovered
+        ? [
+            'linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899)',
+            'linear-gradient(90deg, #ec4899, #3b82f6, #8b5cf6)',
+            'linear-gradient(90deg, #8b5cf6, #ec4899, #3b82f6)',
+          ]
+        : 'linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899)',
+      transition: {
+        duration: 5,
+        repeat: Infinity,
+        repeatType: 'reverse',
+      },
+    })
+  }, [isHovered, controls])
+
+  const bannerItems = [
+    { text: 'Projects', icon: Code },
+    { text: 'Hackathons', icon: Terminal },
+    { text: 'Work', icon: Cpu },
+  ]
 
   return (
-    <div className="w-full">
-           <div className="mx-96">
-  <div className="  relative isolate flex items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
-  <div className="absolute left-[max(-7rem,calc(50%-52rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl" aria-hidden="true">
-    <div className="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-30" style={{clipPath: 'polygon(74.8% 41.9%, 97.2% 73.2%, 100% 34.9%, 92.5% 0.4%, 87.5% 0%, 75% 28.6%, 58.5% 54.6%, 50.1% 56.8%, 46.9% 44%, 48.3% 17.4%, 24.7% 53.9%, 0% 27.9%, 11.9% 74.2%, 24.9% 54.1%, 68.6% 100%, 74.8% 41.9%)'}} />
-  </div>
-  <div className="absolute left-[max(45rem,calc(50%+8rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl" aria-hidden="true">
-    <div className="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-30" style={{clipPath: 'polygon(74.8% 41.9%, 97.2% 73.2%, 100% 34.9%, 92.5% 0.4%, 87.5% 0%, 75% 28.6%, 58.5% 54.6%, 50.1% 56.8%, 46.9% 44%, 48.3% 17.4%, 24.7% 53.9%, 0% 27.9%, 11.9% 74.2%, 24.9% 54.1%, 68.6% 100%, 74.8% 41.9%)'}} />
-  </div>
-
-<div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-  <p className="text-sm leading-6 text-gray-900 mr-4">
-    <strong className="font-semibold mr-2"> Feel free to Connect/ping me For</strong>
-    {''}
-
-    <strong className="font-bold underline decoration-red-500">
-              Projects  ,   </strong>   <strong className="font-bold underline decoration-red-500">    Hackathons </strong>    and  <strong className="font-bold underline decoration-red-500">    Work </strong>   
-  </p>
-  <a href="#contact" className="flex-none rounded-full bg-gray-900 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">Contact Now <span aria-hidden="true">→</span></a>
-</div>
-
-  </div>
-  <div className="flex flex-1 justify-end">
-    <button type="button" className="-m-3 p-3 focus-visible:outline-offset-[-4px]">
-      <span className="sr-only">Dismiss</span>
-      <svg className="h-5 w-5 text-gray-900" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-        <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-      </svg>
-    </button>
-  </div>
-</div>
-    {/* <nav className="container  relative flex flex-wrap items-center justify-between p-8 mx-auto lg:justify-between xl:px-0">
-      <div className="flex flex-wrap items-center justify-between w-full lg:w-auto">
-        
-        <Link href="/" className="flex items-center mx-32">
-          <span className="flex p-2 items-center space-x-2 text-2xl font-medium text-gray-100">
-    
-          </span>
-        </Link>
-      
+    <motion.div
+      className="relative w-full overflow-hidden"
+      animate={controls}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+    >
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 opacity-30"
+        animate={{
+          x: ['-100%', '100%'],
+        }}
+        transition={{
+          repeat: Infinity,
+          repeatType: 'mirror',
+          duration: 15,
+          ease: 'linear',
+        }}
+      />
+      <div className="absolute inset-0 bg-black bg-opacity-20" />
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row items-center justify-between py-4 space-y-4 sm:space-y-0">
+          <div className="flex items-center space-x-4">
+            <motion.span
+              className="text-2xl font-bold text-white"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              {title}
+            </motion.span>
+            <div className="hidden sm:flex space-x-2">
+              {bannerItems.map((item, index) => (
+                <BannerItem key={item.text} text={item.text} icon={item.icon} index={index} />
+              ))}
+            </div>
+          </div>
+          <Link href="#contact" passHref>
+            <motion.button
+              className="px-6 py-2 bg-white text-purple-600 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {cta_button_text} <span aria-hidden="true">→</span>
+            </motion.button>
+          </Link>
+        </div>
       </div>
-
-      
-    </nav> */}
-  </div>
+    </motion.div>
   )
 }
 
-export default Navbar
+const BannerItem = ({ text, icon: Icon, index }: { text: string; icon: any; index: number }) => (
+  <motion.div
+    className="px-3 py-1 bg-white bg-opacity-20 rounded-full text-sm font-medium text-white flex items-center space-x-2"
+    initial={{ opacity: 0, x: -20 }}
+    animate={{ opacity: 1, x: 0 }}
+    transition={{ duration: 0.5, delay: index * 0.1 }}
+    whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.3)' }}
+  >
+    <Icon size={16} />
+    <span>{text}</span>
+  </motion.div>
+)
+
+export default CoolBanner
