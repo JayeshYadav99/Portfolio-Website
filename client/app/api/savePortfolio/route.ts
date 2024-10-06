@@ -57,8 +57,11 @@ export async function POST(request: Request) {
       },
     }
 
-    const portfolio = await Portfolio.create(portfolioData)
-    
+    const portfolio = await Portfolio.findOneAndUpdate({}, portfolioData, { 
+      new: true, 
+      upsert: true, 
+      setDefaultsOnInsert: true 
+    })
     console.log('Saved portfolio:', JSON.stringify(portfolio, null, 2))
 
     return NextResponse.json({ message: 'Portfolio saved successfully', portfolio }, { status: 200 })
