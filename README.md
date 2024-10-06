@@ -1,6 +1,6 @@
 # Dynamic Portfolio Website
 
-![Portfolio Banner](https://placeholder.com/path-to-your-banner-image.jpg)
+![Portfolio Banner](https://github.com/user-attachments/assets/613f1b3a-99b2-411d-885d-076337ee5b98)
 
 ## Table of Contents
 - [Overview](#overview)
