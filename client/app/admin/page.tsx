@@ -1,13 +1,15 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import PortfolioForm from '../../components/admin/PortfolioForm'
+import { getPortfolio } from '@/lib/actions'
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [portfolioData, setPortfolioData] = useState(null)
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -22,6 +24,7 @@ export default function AdminPage() {
 
       if (response.ok) {
         setIsAuthenticated(true)
+        fetchPortfolioData()
       } else {
         setError('Invalid username or password')
       }
@@ -30,6 +33,25 @@ export default function AdminPage() {
       setError('An error occurred. Please try again.')
     }
   }
+
+  const fetchPortfolioData = async () => {
+    try {
+      const { story } = await getPortfolio()
+      if (story) {
+        setPortfolioData(story)
+      } else {
+        console.error('Failed to fetch portfolio data')
+      }
+    } catch (error) {
+      console.error('Error fetching portfolio data:', error)
+    }
+  }
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchPortfolioData()
+    }
+  }, [isAuthenticated])
 
   if (!isAuthenticated) {
     return (
@@ -96,7 +118,11 @@ export default function AdminPage() {
   return (
     <div className="container mx-auto py-10">
       <h1 className="text-4xl font-bold mb-8 text-center text-gray-800">Edit Portfolio</h1>
-      <PortfolioForm />
+      {portfolioData ? (
+        <PortfolioForm initialData={portfolioData} />
+      ) : (
+        <div className="text-center text-gray-600">Loading portfolio data...</div>
+      )}
     </div>
   )
 }

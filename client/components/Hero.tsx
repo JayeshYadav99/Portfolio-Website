@@ -10,7 +10,7 @@ const Container = ({ children, className }: { children: React.ReactNode; classNa
   <div className={`container mx-auto px-4 sm:px-6 lg:px-8 ${className}`}>{children}</div>
 )
 
-const Hero = ({ data,name }: { data: any,name:string }) => {
+const Hero = ({ data,name,currentStatus }: { data: any,name:string ,currentStatus:string}) => {
   console.log("Name",name)
   const { title, description, cta_button_text, picture, cta_button_link } = data
   const controls = useAnimation()
@@ -60,7 +60,7 @@ const Hero = ({ data,name }: { data: any,name:string }) => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="w-full lg:w-1/2  lg:mt-0"
         >
-          <ProfileWithTooltip picture={picture} controls={controls} name={name} />
+          <ProfileWithTooltip picture={picture} controls={controls} name={name} currentStatus={currentStatus} />
         </motion.div>
       </Container>
 
@@ -88,7 +88,7 @@ const Hero = ({ data,name }: { data: any,name:string }) => {
   )
 }
 
-const ProfileWithTooltip = ({ picture, controls ,name}: { picture: any, controls: any,name:string }) => {
+const ProfileWithTooltip = ({ picture, controls ,name,currentStatus}: { picture: any, controls: any,name:string,currentStatus:string }) => {
   const [isTooltipVisible, setTooltipVisible] = useState(false)
 
   const technologies = [
@@ -146,7 +146,7 @@ const ProfileWithTooltip = ({ picture, controls ,name}: { picture: any, controls
           Name: <strong>{name}</strong>
         </p>
         <p className="text-md">
-          Currently: <span className="font-semibold">Pursuing BTech (CSE) in KPGU</span>
+          Currently: <span className="font-semibold">{currentStatus}</span>
         </p>
       </motion.div>
     </div>

@@ -2,12 +2,13 @@
 
 import React, { useState, useEffect } from 'react'
 import { useForm, SubmitHandler, FormProvider, useFieldArray } from 'react-hook-form'
-import { User, Mail, Github, Linkedin, Briefcase, Award, Image, Link, Type, FileText, Layout, ChevronLeft, ChevronRight, Plus, Minus } from 'lucide-react'
+import { User, Mail, Github, Linkedin, Briefcase, Award, Image, Link, Type, FileText, Layout, ChevronLeft, ChevronRight, Plus, Minus, BookOpen, Code } from 'lucide-react'
 import { getPortfolio } from '@/lib/actions';
-interface ServiceCard {
+
+interface ProjectCard {
   title: string;
   subtitle: string;
-  framework: string;
+  technologies: string;
   projectLink: string;
   description: string;
   image: string;
@@ -21,6 +22,7 @@ interface AchievementCard {
 
 interface FormInputs {
   name: string;
+  currentStatus: string;
   heroTitle: string;
   heroPictureFilename: string;
   heroDescription: string;
@@ -30,28 +32,50 @@ interface FormInputs {
   contactTitle: string;
   contactGithub: string;
   contactLinkedin: string;
-  servicesTitle: string;
-  serviceCards: ServiceCard[];
+  projectsTitle: string;
+  projectCards: ProjectCard[];
   navTitle: string;
   navCTAText: string;
   achievementsTitle: string;
   achievementCards: AchievementCard[];
 }
 
-const steps = ['Basic Info', 'Hero', 'Contact', 'Services', 'Navigation', 'Achievements']
+const steps = ['Basic Info', 'Hero', 'Contact', 'Projects', 'Navigation', 'Achievements']
+interface PortfolioFormProps {
+  initialData: any;
+}
 
-export default function MultiStepPortfolioForm() {
+export default function MultiStepPortfolioForm({ initialData }: PortfolioFormProps) {
   const [currentStep, setCurrentStep] = useState(0)
   const methods = useForm<FormInputs>({
     defaultValues: {
-      serviceCards: [{ title: '', subtitle: '', framework: '', projectLink: '', description: '', image: '' }],
-      achievementCards: [{ name: '', comment: '', pictureFilename: '' }]
+      name: initialData.name,
+      currentStatus: initialData.currentStatus || '',
+      heroTitle: initialData.content.Hero[0].title,
+      heroPictureFilename: initialData.content.Hero[0].picture.filename,
+      heroDescription: initialData.content.Hero[0].description,
+      heroCTALink: initialData.content.Hero[0].cta_button_link,
+      heroCTAText: initialData.content.Hero[0].cta_button_text,
+      contactEmail: initialData.content.Contact[0].email,
+      contactTitle: initialData.content.Contact[0].title,
+      contactGithub: initialData.content.Contact[0].githubProfile,
+      contactLinkedin: initialData.content.Contact[0].linkedinProfile,
+      projectsTitle: initialData.content.Projects[0].title,
+      projectCards: initialData.content.Projects[0].service_cards,
+      navTitle: initialData.content.Nav_Section[0].title,
+      navCTAText: initialData.content.Nav_Section[0].cta_button_text,
+      achievementsTitle: initialData.content.Achievements[0].title,
+      achievementCards: initialData.content.Achievements[0].Achievement_cards.map((card: any) => ({
+        name: card.name,
+        comment: card.comment,
+        pictureFilename: card.picture.filename
+      }))
     }
   })
   const { handleSubmit, formState: { errors }, control, reset } = methods
-  const { fields: serviceFields, append: appendService, remove: removeService } = useFieldArray({
+  const { fields: projectFields, append: appendProject, remove: removeProject } = useFieldArray({
     control,
-    name: "serviceCards"
+    name: "projectCards"
   });
   const { fields: achievementFields, append: appendAchievement, remove: removeAchievement } = useFieldArray({
     control,
@@ -68,6 +92,7 @@ export default function MultiStepPortfolioForm() {
             reset(
                 {
                 name: story.name,
+                currentStatus: story.currentStatus || '',
                 heroTitle: story.content.Hero[0].title,
                 heroPictureFilename: story.content.Hero[0].picture.filename,
                 heroDescription: story.content.Hero[0].description,
@@ -77,8 +102,8 @@ export default function MultiStepPortfolioForm() {
                 contactTitle: story.content.Contact[0].title,
                 contactGithub: story.content.Contact[0].githubProfile,
                 contactLinkedin: story.content.Contact[0].linkedinProfile,
-                servicesTitle: story.content.Services[0].title,
-                serviceCards: story.content.Services[0].service_cards,
+                projectsTitle: story.content.Projects[0].title,
+                projectCards: story.content.Projects[0].project_cards,
                 navTitle: story.content.Nav_Section[0].title,
                 navCTAText: story.content.Nav_Section[0].cta_button_text,
                 achievementsTitle: story.content.Achievements[0].title,
@@ -132,6 +157,7 @@ export default function MultiStepPortfolioForm() {
       // Handle error (e.g., show an error message)
     }
   }
+
   const handleNext = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault(); // Prevent form submission
     console.log("Next clicked", event.type);
@@ -189,6 +215,7 @@ export default function MultiStepPortfolioForm() {
           <div>
             <h3 className="text-2xl font-bold mb-4 text-gray-800">Basic Information</h3>
             <InputWithIcon icon={User} label="Name" name="name" required={true} />
+            <InputWithIcon icon={BookOpen} label="Current Status" name="currentStatus" required={true} />
           </div>
         )
       case 1:
@@ -215,30 +242,30 @@ export default function MultiStepPortfolioForm() {
       case 3:
         return (
           <div>
-            <h3 className="text-2xl font-bold mb-4 text-blue-700">Services Section</h3>
-            <InputWithIcon icon={Type} label="Services Title" name="servicesTitle" />
-            {serviceFields.map((field, index) => (
+            <h3 className="text-2xl font-bold mb-4 text-blue-700">Projects Section</h3>
+            <InputWithIcon icon={Type} label="Projects Title" name="projectsTitle" />
+            {projectFields.map((field, index) => (
               <div key={field.id} className="mt-4 p-4 border border-gray-200 rounded-md">
-                <h4 className="text-lg font-bold mb-2 text-blue-600">Service Card {index + 1}</h4>
-                <InputWithIcon icon={Type} label="Card Title" name={`serviceCards.${index}.title` as keyof FormInputs} />
-                <InputWithIcon icon={Type} label="Subtitle" name={`serviceCards.${index}.subtitle` as keyof FormInputs} />
-                <InputWithIcon icon={Briefcase} label="Framework" name={`serviceCards.${index}.framework` as keyof FormInputs} />
-                <InputWithIcon icon={Link} label="Project Link" name={`serviceCards.${index}.projectLink` as keyof FormInputs} />
-                <TextAreaWithIcon icon={FileText} label="Description" name={`serviceCards.${index}.description` as keyof FormInputs} />
-                <InputWithIcon icon={Image} label="Image URL" name={`serviceCards.${index}.image` as keyof FormInputs} />
-                {serviceFields.length > 1 && (
-                  <button type="button" onClick={() => removeService(index)} className="mt-2 text-red-600 hover:text-red-800">
-                    <Minus className="inline-block mr-1" /> Remove this service
+                <h4 className="text-lg font-bold mb-2 text-blue-600">Project Card {index + 1}</h4>
+                <InputWithIcon icon={Type} label="Project Title" name={`projectCards.${index}.title` as keyof FormInputs} />
+                <InputWithIcon icon={Type} label="Subtitle" name={`projectCards.${index}.subtitle` as keyof FormInputs} />
+                <InputWithIcon icon={Code} label="Technologies" name={`projectCards.${index}.technologies` as keyof FormInputs} />
+                <InputWithIcon icon={Link} label="Project Link" name={`projectCards.${index}.projectLink` as keyof FormInputs} />
+                <TextAreaWithIcon icon={FileText} label="Description" name={`projectCards.${index}.description` as keyof FormInputs} />
+                <InputWithIcon icon={Image} label="Image URL" name={`projectCards.${index}.image` as keyof FormInputs} />
+                {projectFields.length > 1 && (
+                  <button type="button" onClick={() => removeProject(index)} className="mt-2 text-red-600 hover:text-red-800">
+                    <Minus className="inline-block mr-1" /> Remove this project
                   </button>
                 )}
               </div>
             ))}
             <button
               type="button"
-              onClick={() => appendService({ title: '', subtitle: '', framework: '', projectLink: '', description: '', image: '' })}
+              onClick={() => appendProject({ title: '', subtitle: '', technologies: '', projectLink: '', description: '', image: '' })}
               className="mt-4 text-blue-600 hover:text-blue-800"
             >
-              <Plus className="inline-block mr-1" /> Add another service
+              <Plus className="inline-block mr-1" /> Add another project
             </button>
           </div>
         )

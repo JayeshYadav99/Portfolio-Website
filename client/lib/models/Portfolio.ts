@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 const portfolioSchema = new mongoose.Schema({
   story: {
     name: { type: String, required: true },
+    currentStatus: { type: String, required: true },
     content: {
       Hero: [{
         title: { type: String, required: true },
@@ -19,12 +20,12 @@ const portfolioSchema = new mongoose.Schema({
         githubProfile: { type: String, required: true },
         linkedinProfile: { type: String, required: true },
       }],
-      Services: [{
+      Projects: [{
         title: { type: String, required: true },
-        service_cards: [{
+        project_cards: [{
           title: { type: String, required: true },
           subtitle: { type: String, required: true },
-          framework: { type: String, required: true },
+          technologies: { type: String, required: true },
           projectLink: { type: String, required: true },
           description: { type: String, required: true },
           image: { type: String, required: true },

@@ -7,14 +7,15 @@ export async function POST(request: Request) {
     await dbConnect();
 
     const formData = await request.formData()
-    const serviceCards = JSON.parse(formData.get('serviceCards') as string)
+    const projectCards = JSON.parse(formData.get('projectCards') as string)
     const achievementCards = JSON.parse(formData.get('achievementCards') as string)
-    console.log('serviceCards:', serviceCards)
+    console.log('projectCards:', projectCards)
     console.log('achievementCards:', achievementCards)
 
     const portfolioData = {
       story: {
         name: formData.get('name'),
+        currentStatus: formData.get('currentStatus'),
         content: {
           Hero: [{
             title: formData.get('heroTitle'),
@@ -29,12 +30,12 @@ export async function POST(request: Request) {
             githubProfile: formData.get('contactGithub'),
             linkedinProfile: formData.get('contactLinkedin'),
           }],
-          Services: [{
-            title: formData.get('servicesTitle'),
-            service_cards: serviceCards.map((card: any) => ({
+          Projects: [{
+            title: formData.get('projectsTitle'),
+            project_cards: projectCards.map((card: any) => ({
               title: card.title,
               subtitle: card.subtitle,
-              framework: card.framework,
+              technologies: card.technologies,
               projectLink: card.projectLink,
               description: card.description,
               image: card.image,

@@ -1,9 +1,8 @@
 
-import axios from 'axios';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Services from '../components/Services';
-import Testimonials from '../components/Testimonials';
+import Achievements from '../components/Achievements';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 import { getPortfolio } from '@/lib/actions';
@@ -16,9 +15,10 @@ console.log(response);
 console.log("story",JSON.stringify(story));
     return {
       name: story.name,
+      currentStatus: story.currentStatus,
       Nav_Section: story.content.Nav_Section[0],
       Hero: story.content.Hero[0],
-      Services: story.content.Services[0],
+      Projects: story.content.Projects[0],
       Achievements: story.content.Achievements[0],
       Contact: story.content.Contact[0]
     };
@@ -38,9 +38,9 @@ export default async function Home() {
   return (
     <>
       <Navbar data={portfolioData.Nav_Section}  />
-      <Hero data={portfolioData.Hero} name={portfolioData.name}/>
-      <Services data={portfolioData.Services} />
-      <Testimonials data={portfolioData.Achievements} />
+      <Hero data={portfolioData.Hero} name={portfolioData.name} currentStatus={portfolioData.currentStatus}/>
+      <Services data={portfolioData.Projects} />
+      <Achievements data={portfolioData.Achievements} />
       <section id="contact">
         <Contact data={portfolioData.Contact} />
       </section>

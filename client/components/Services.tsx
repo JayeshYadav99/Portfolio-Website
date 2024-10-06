@@ -6,7 +6,7 @@ import Image from "next/image"
 import { motion } from 'framer-motion'
 
 const Services = ({ data }: any) => {
-  const { title, service_cards } = data
+  const { title, project_cards } = data
 
   return (
     <section className="relative py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
@@ -42,7 +42,7 @@ const Services = ({ data }: any) => {
           {title}
         </motion.h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-          {service_cards.map((s: any, index: number) => (
+          {project_cards.map((s: any, index: number) => (
             <ServiceCard key={s.title} data={s} index={index} />
           ))}
         </div>
@@ -52,7 +52,7 @@ const Services = ({ data }: any) => {
 }
 
 const ServiceCard = ({ data, index }: any) => {
-  const { title, subtitle, framework, description, projectLink, image } = data
+  const { title, subtitle,  technologies,description, projectLink, image } = data
   const [isHovered, setIsHovered] = useState(false)
 
   return (
@@ -82,7 +82,7 @@ const ServiceCard = ({ data, index }: any) => {
       <div className="p-6 sm:p-8 flex-grow bg-gradient-to-br from-gray-800 to-gray-900">
         <p className="text-xl text-gray-300 mb-4">{subtitle}</p>
         <div className="flex flex-wrap gap-2 mb-6">
-          {framework.split(',').map((tech: string) => (
+          {technologies.split(',').map((tech: string) => (
             <span key={tech} className="px-3 py-1 bg-blue-600 rounded-full text-sm font-medium">
               {tech.trim()}
             </span>
