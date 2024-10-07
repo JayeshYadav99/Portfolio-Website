@@ -6,7 +6,10 @@ const connection :{isConnected?: number} = {  };
         return;
     }
     console.log(`MongoDB URL: ${process.env.MONGO_URL}`);
-    const db = await mongoose.connect(process.env.MONGO_URL!);
+    const db = await mongoose.connect(process.env.MONGO_URL!,{
+        dbName: process.env.DB_NAME,
+        bufferCommands: false,
+    });
     connection.isConnected = db.connections[0].readyState;
     console.log(connection.isConnected);
 }

@@ -4,12 +4,44 @@ import { useState, useEffect } from 'react'
 import PortfolioForm from '../../components/admin/PortfolioForm'
 import { getPortfolio } from '@/lib/actions'
 
+const emptyPortfolioData = {
+  name: '',
+  currentStatus: '',
+  content: {
+    Hero: [{
+      title: '',
+      picture: { filename: '' },
+      description: '',
+      cta_button_link: '',
+      cta_button_text: '',
+    }],
+    Contact: [{
+      email: '',
+      title: '',
+      githubProfile: '',
+      linkedinProfile: '',
+    }],
+    Projects: [{
+      title: '',
+      project_cards: [],
+    }],
+    Nav_Section: [{
+      title: '',
+      cta_button_text: '',
+    }],
+    Achievements: [{
+      title: '',
+      Achievement_cards: [],
+    }],
+  },
+}
+
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
-  const [portfolioData, setPortfolioData] = useState(null)
+  const [portfolioData, setPortfolioData] = useState(emptyPortfolioData)
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -41,9 +73,11 @@ export default function AdminPage() {
         setPortfolioData(story)
       } else {
         console.error('Failed to fetch portfolio data')
+        setPortfolioData(emptyPortfolioData)
       }
     } catch (error) {
       console.error('Error fetching portfolio data:', error)
+      setPortfolioData(emptyPortfolioData)
     }
   }
 
@@ -118,11 +152,7 @@ export default function AdminPage() {
   return (
     <div className="container mx-auto py-10">
       <h1 className="text-4xl font-bold mb-8 text-center text-gray-800">Edit Portfolio</h1>
-      {portfolioData ? (
-        <PortfolioForm initialData={portfolioData} />
-      ) : (
-        <div className="text-center text-gray-600">Loading portfolio data...</div>
-      )}
+      <PortfolioForm initialData={portfolioData} />
     </div>
   )
 }
