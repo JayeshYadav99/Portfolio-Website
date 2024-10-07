@@ -2,43 +2,12 @@
 
 import React, { useState, useEffect } from 'react'
 import { useForm, SubmitHandler, FormProvider, useFieldArray } from 'react-hook-form'
-import { User, Mail, Github, Linkedin, Briefcase, Award, Image, Link, Type, FileText, Layout, ChevronLeft, ChevronRight, Plus, Minus, BookOpen, Code } from 'lucide-react'
+import { User, Mail, Github, Linkedin, Briefcase, Award, Image, Link, Type,Loader, FileText, Layout, ChevronLeft, ChevronRight, Plus, Minus, BookOpen, Code } from 'lucide-react'
 import { getPortfolio } from '@/lib/actions';
+import { useRouter } from 'next/navigation'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { FormSchema, FormInputs } from '../../lib/schema'
 
-interface ProjectCard {
-  title: string;
-  subtitle: string;
-  technologies: string;
-  projectLink: string;
-  description: string;
-  image: string;
-}
-
-interface AchievementCard {
-  name: string;
-  comment: string;
-  pictureFilename: string;
-}
-
-interface FormInputs {
-  name: string;
-  currentStatus: string;
-  heroTitle: string;
-  heroPictureFilename: string;
-  heroDescription: string;
-  heroCTALink: string;
-  heroCTAText: string;
-  contactEmail: string;
-  contactTitle: string;
-  contactGithub: string;
-  contactLinkedin: string;
-  projectsTitle: string;
-  projectCards: ProjectCard[];
-  navTitle: string;
-  navCTAText: string;
-  achievementsTitle: string;
-  achievementCards: AchievementCard[];
-}
 
 const steps = ['Basic Info', 'Hero', 'Contact', 'Projects', 'Navigation', 'Achievements']
 interface PortfolioFormProps {
@@ -47,7 +16,11 @@ interface PortfolioFormProps {
 
 export default function MultiStepPortfolioForm({ initialData }: PortfolioFormProps) {
   const [currentStep, setCurrentStep] = useState(0)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const router = useRouter()
   const methods = useForm<FormInputs>({
+    resolver: zodResolver(FormSchema),
+    mode: 'onChange',
     defaultValues: {
       name: initialData.name,
       currentStatus: initialData.currentStatus || '',
@@ -72,7 +45,7 @@ export default function MultiStepPortfolioForm({ initialData }: PortfolioFormPro
       }))
     }
   })
-  const { handleSubmit, formState: { errors }, control, reset } = methods
+  const { handleSubmit, formState: { errors,isValid  }, control, reset,trigger,getValues } = methods
   const { fields: projectFields, append: appendProject, remove: removeProject } = useFieldArray({
     control,
     name: "projectCards"
@@ -128,6 +101,7 @@ export default function MultiStepPortfolioForm({ initialData }: PortfolioFormPro
   const onSubmit: SubmitHandler<FormInputs> = async (data,event) => {
     console.log(event)
     event?.preventDefault();
+    setIsSubmitting(true)
     const formData = new FormData()
     Object.entries(data).forEach(([key, value]) => {
       if (Array.isArray(value)) {
@@ -138,7 +112,7 @@ export default function MultiStepPortfolioForm({ initialData }: PortfolioFormPro
     })
 
     try {
-        alert("Form is submitted");
+     
         console.log(formData.get("achievementCards"));
       const response = await fetch('/api/savePortfolio', {
         method: 'POST',
@@ -147,28 +121,59 @@ export default function MultiStepPortfolioForm({ initialData }: PortfolioFormPro
       const result = await response.json()
       if (response.ok) {
         console.log('Success:', result)
+      
+        router.push('/')
         // Handle success (e.g., show a success message)
       } else {
         console.error('Error:', result)
+        setIsSubmitting(false)
         // Handle error (e.g., show an error message)
       }
     } catch (error) {
       console.error('Error:', error)
+      setIsSubmitting(false)
       // Handle error (e.g., show an error message)
     }
   }
+  const getStepFields = (step: number): (keyof FormInputs)[] => {
+    switch (step) {
+      case 0:
+        return ['name', 'currentStatus'];
+      case 1:
+        return ['heroTitle', 'heroPictureFilename', 'heroDescription', 'heroCTALink', 'heroCTAText'];
+      case 2:
+        return ['contactEmail', 'contactTitle', 'contactGithub', 'contactLinkedin'];
+      case 3:
+        return ['projectsTitle', 'projectCards'];
+      case 4:
+        return ['navTitle', 'navCTAText'];
+      case 5:
+        return ['achievementsTitle', 'achievementCards'];
+      default:
+        return [];
+    }
+  }
 
-  const handleNext = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault(); // Prevent form submission
-    console.log("Next clicked", event.type);
-    setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1))
+  const handleNext = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    const currentStepFields = getStepFields(currentStep);
+    const stepValidation = await trigger(currentStepFields);
+    console.log('Step validation result:', stepValidation);
+    console.log('Current form values:', getValues());
+    console.log('Current form errors:', errors);
+    
+    if (stepValidation) {
+      setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1))
+    } else {
+      console.log('Validation failed for step:', currentStep);
+    }
   }
 
   const handlePrevious = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 0))
   }
 
-  const InputWithIcon = ({ icon: Icon, label, name, type = "text", required = false }: { icon: React.ElementType, label: string, name: keyof FormInputs, type?: string, required?: boolean }) => (
+  const InputWithIcon = ({ icon: Icon, label, name, type = "text",placeholder = "", required = false }: { icon: React.ElementType, label: string, name: keyof FormInputs, type?: string,placeholder?: string, required?: boolean }) => (
     <div className="mb-4">
       <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
         {label}
@@ -181,6 +186,7 @@ export default function MultiStepPortfolioForm({ initialData }: PortfolioFormPro
           {...methods.register(name, { required: required ? `${label} is required` : false })}
           type={type}
           id={name}
+          placeholder={placeholder}
           className="block w-full rounded-md border-gray-300 pl-10 pr-3 py-2 text-sm focus:ring-indigo-500 focus:border-indigo-500"
         />
       </div>
@@ -188,7 +194,7 @@ export default function MultiStepPortfolioForm({ initialData }: PortfolioFormPro
     </div>
   )
 
-  const TextAreaWithIcon = ({ icon: Icon, label, name, required = false }: { icon: React.ElementType, label: string, name: keyof FormInputs, required?: boolean }) => (
+  const TextAreaWithIcon = ({ icon: Icon, label, name,placeholder = "", required = false }: { icon: React.ElementType, label: string, name: keyof FormInputs,placeholder?: string, required?: boolean }) => (
     <div className="mb-4">
       <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
         {label}
@@ -201,6 +207,7 @@ export default function MultiStepPortfolioForm({ initialData }: PortfolioFormPro
           {...methods.register(name, { required: required ? `${label} is required` : false })}
           id={name}
           rows={3}
+          placeholder={placeholder}
           className="block w-full rounded-md border-gray-300 pl-10 pr-3 py-2 text-sm focus:ring-indigo-500 focus:border-indigo-500"
         ></textarea>
       </div>
@@ -214,45 +221,45 @@ export default function MultiStepPortfolioForm({ initialData }: PortfolioFormPro
         return (
           <div>
             <h3 className="text-2xl font-bold mb-4 text-gray-800">Basic Information</h3>
-            <InputWithIcon icon={User} label="Name" name="name" required={true} />
-            <InputWithIcon icon={BookOpen} label="Current Status" name="currentStatus" required={true} />
+            <InputWithIcon icon={User} label="Name" name="name" required={true} placeholder="John Doe" />
+            <InputWithIcon icon={BookOpen} label="Current Status" name="currentStatus" required={true} placeholder="Full Stack Developer" />
           </div>
         )
       case 1:
         return (
           <div>
             <h3 className="text-2xl font-bold mb-4 text-indigo-700">Hero Section</h3>
-            <InputWithIcon icon={Type} label="Title" name="heroTitle" />
-            <InputWithIcon icon={Image} label="Picture filename" name="heroPictureFilename" />
-            <TextAreaWithIcon icon={FileText} label="Description" name="heroDescription" />
-            <InputWithIcon icon={Link} label="CTA Button Link" name="heroCTALink" />
-            <InputWithIcon icon={Type} label="CTA Button Text" name="heroCTAText" />
+            <InputWithIcon icon={Type} label="Title" name="heroTitle" placeholder="Welcome to My Portfolio" />
+            <InputWithIcon icon={Image} label="Picture filename" name="heroPictureFilename" placeholder="hero-image.jpg" />
+            <TextAreaWithIcon icon={FileText} label="Description" name="heroDescription" placeholder="A brief description of yourself and your skills" />
+            <InputWithIcon icon={Link} label="CTA Button Link" name="heroCTALink" placeholder="https://example.com/contact" />
+            <InputWithIcon icon={Type} label="CTA Button Text" name="heroCTAText" placeholder="Get in Touch" />
           </div>
         )
       case 2:
         return (
           <div>
             <h3 className="text-2xl font-bold mb-4 text-green-700">Contact Section</h3>
-            <InputWithIcon icon={Mail} label="Email" name="contactEmail" type="email" />
-            <InputWithIcon icon={Type} label="Title" name="contactTitle" />
-            <InputWithIcon icon={Github} label="GitHub Profile" name="contactGithub" />
-            <InputWithIcon icon={Linkedin} label="LinkedIn Profile" name="contactLinkedin" />
+            <InputWithIcon icon={Mail} label="Email" name="contactEmail" type="email" placeholder="johndoe@example.com" />
+            <InputWithIcon icon={Type} label="Title" name="contactTitle" placeholder="Get in Touch" />
+            <InputWithIcon icon={Github} label="GitHub Profile username" name="contactGithub" placeholder="johndoe" />
+            <InputWithIcon icon={Linkedin} label="LinkedIn Profile username" name="contactLinkedin" placeholder="johndoedev" />
           </div>
         )
       case 3:
         return (
           <div>
             <h3 className="text-2xl font-bold mb-4 text-blue-700">Projects Section</h3>
-            <InputWithIcon icon={Type} label="Projects Title" name="projectsTitle" />
+            <InputWithIcon icon={Type} label="Projects Title" name="projectsTitle" placeholder="My Projects" />
             {projectFields.map((field, index) => (
               <div key={field.id} className="mt-4 p-4 border border-gray-200 rounded-md">
                 <h4 className="text-lg font-bold mb-2 text-blue-600">Project Card {index + 1}</h4>
-                <InputWithIcon icon={Type} label="Project Title" name={`projectCards.${index}.title` as keyof FormInputs} />
-                <InputWithIcon icon={Type} label="Subtitle" name={`projectCards.${index}.subtitle` as keyof FormInputs} />
-                <InputWithIcon icon={Code} label="Technologies" name={`projectCards.${index}.technologies` as keyof FormInputs} />
-                <InputWithIcon icon={Link} label="Project Link" name={`projectCards.${index}.projectLink` as keyof FormInputs} />
-                <TextAreaWithIcon icon={FileText} label="Description" name={`projectCards.${index}.description` as keyof FormInputs} />
-                <InputWithIcon icon={Image} label="Image URL" name={`projectCards.${index}.image` as keyof FormInputs} />
+                <InputWithIcon icon={Type} label="Project Title" name={`projectCards.${index}.title` as keyof FormInputs} placeholder="Project Name" />
+                <InputWithIcon icon={Type} label="Subtitle" name={`projectCards.${index}.subtitle` as keyof FormInputs} placeholder="Brief project description" />
+                <InputWithIcon icon={Code} label="Technologies" name={`projectCards.${index}.technologies` as keyof FormInputs} placeholder="React, Node.js, MongoDB" />
+                <InputWithIcon icon={Link} label="Project Link" name={`projectCards.${index}.projectLink` as keyof FormInputs} placeholder="https://example.com/project" />
+                <TextAreaWithIcon icon={FileText} label="Description" name={`projectCards.${index}.description` as keyof FormInputs} placeholder="Detailed project description" />
+                <InputWithIcon icon={Image} label="Image URL" name={`projectCards.${index}.image` as keyof FormInputs} placeholder="https://example.com/project-image.jpg" />
                 {projectFields.length > 1 && (
                   <button type="button" onClick={() => removeProject(index)} className="mt-2 text-red-600 hover:text-red-800">
                     <Minus className="inline-block mr-1" /> Remove this project
@@ -273,21 +280,21 @@ export default function MultiStepPortfolioForm({ initialData }: PortfolioFormPro
         return (
           <div>
             <h3 className="text-2xl font-bold mb-4 text-yellow-700">Navigation Section</h3>
-            <InputWithIcon icon={Layout} label="Title" name="navTitle" />
-            <InputWithIcon icon={Type} label="CTA Button Text" name="navCTAText" />
+            <InputWithIcon icon={Layout} label="Title" name="navTitle" placeholder="Main Navigation" />
+            <InputWithIcon icon={Type} label="CTA Button Text" name="navCTAText" placeholder="Contact Me" />
           </div>
         )
       case 5:
         return (
           <div>
             <h3 className="text-2xl font-bold mb-4 text-red-700">Achievements Section</h3>
-            <InputWithIcon icon={Type} label="Achievements Title" name="achievementsTitle" />
+            <InputWithIcon icon={Type} label="Achievements Title" name="achievementsTitle" placeholder="My Achievements" />
             {achievementFields.map((field, index) => (
               <div key={field.id} className="mt-4 p-4 border border-gray-200 rounded-md">
-                <h4 className="text-lg font-bold mb-2 text-red-600">Achievement Card {index + 1}</h4>
-                <InputWithIcon icon={Award} label="Achievement Name" name={`achievementCards.${index}.name`as keyof FormInputs} />
-                <TextAreaWithIcon icon={FileText} label="Comment" name={`achievementCards.${index}.comment` as keyof FormInputs} />
-                <InputWithIcon icon={Image} label="Picture filename" name={`achievementCards.${index}.pictureFilename` as keyof FormInputs} />
+                <h4  className="text-lg font-bold mb-2 text-red-600">Achievement Card {index + 1}</h4>
+                <InputWithIcon icon={Award} label="Achievement Name" name={`achievementCards.${index}.name`as keyof FormInputs} placeholder="Achievement Title" />
+                <TextAreaWithIcon icon={FileText} label="Comment" name={`achievementCards.${index}.comment` as keyof FormInputs} placeholder="Description of the achievement" />
+                <InputWithIcon icon={Image} label="Picture filename" name={`achievementCards.${index}.pictureFilename` as keyof FormInputs} placeholder="achievement-image.jpg" />
                 {achievementFields.length > 1 && (
                   <button type="button" onClick={() => removeAchievement(index)} className="mt-2 text-red-600 hover:text-red-800">
                     <Minus className="inline-block mr-1" /> Remove this achievement
@@ -308,7 +315,17 @@ export default function MultiStepPortfolioForm({ initialData }: PortfolioFormPro
         return null
     }
   }
-
+  if (isSubmitting) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75 z-50">
+        <div className="text-center">
+          <Loader className="animate-spin h-12 w-12 text-blue-500 mb-4" />
+          <p className="text-xl font-semibold text-gray-700">Saving your portfolio...</p>
+          <p className="text-gray-500">You'll be redirected to your portfolio page shortly.</p>
+        </div>
+      </div>
+    )
+  }
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 max-w-2xl mx-auto">

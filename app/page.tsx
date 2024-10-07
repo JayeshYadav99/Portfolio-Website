@@ -32,7 +32,23 @@ const getLandingPageData = async () => {
 };
 
 export default async function Home() {
-  const portfolioData = await getLandingPageData();
+let portfolioData = null;
+  try {
+  const { story } = await getPortfolio();
+  console.log("story", JSON.stringify(story));
+ portfolioData = {
+    name: story.name,
+    currentStatus: story.currentStatus,
+    Nav_Section: story.content.Nav_Section[0],
+    Hero: story.content.Hero[0],
+    Projects: story.content.Projects[0],
+    Achievements: story.content.Achievements[0],
+    Contact: story.content.Contact[0]
+  };
+} catch (error) {
+  console.error('Error fetching portfolio data:', error);
+  return null;
+}
 
   if (!portfolioData) {
     return (

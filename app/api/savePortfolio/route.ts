@@ -64,10 +64,10 @@ export async function POST(request: Request) {
     })
     console.log('Saved portfolio:', JSON.stringify(portfolio, null, 2))
 
-    return NextResponse.json({ message: 'Portfolio saved successfully', portfolio }, { status: 200 })
+    return NextResponse.json({ message: 'Portfolio saved successfully',success:true, portfolio }, { status: 200 })
   } catch (error) {
     console.error('Failed to save portfolio:', error)
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    return NextResponse.json({ error: 'Failed to save portfolio', details: errorMessage }, { status: 500 })
+    return NextResponse.json({ error: 'Failed to save portfolio',success:false, details: errorMessage }, { status: 500 })
   }
 }
