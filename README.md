@@ -27,7 +27,7 @@ Welcome to the **Dynamic Portfolio Website** – your go-to solution for creatin
 - **Project Showcase**: Highlight your best work with detailed project cards, images, and descriptions.
 - **Achievement Section**: Display your accomplishments, certifications, and accolades.
 - **Contact Form**: Allow visitors to reach out to you directly through your portfolio.
-- **SEO Optimized**: Enhance your online visibility with built-in SEO best practices.
+- **SEO Optimized**: Enhance your online visibility with built-in SEO best practices.(upcoming)
 
 ---
 
