@@ -1,54 +1,83 @@
-import Link from 'next/link';
-import Navbar from '../components/Navbar';
-import Hero from '../components/Hero';
-import Services from '../components/Services';
-import Achievements from '../components/Achievements';
-import Contact from '../components/Contact';
-import Footer from '../components/Footer';
-import { getPortfolio } from '@/lib/actions';
+'use client'
 
-const getLandingPageData = async () => {
-  try {
-    const response = await getPortfolio();
-    const { story } = response;
-    
-    if (!story) {
-      return null;
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import Navbar from '../components/Navbar'
+import Hero from '../components/Hero'
+import Services from '../components/Services'
+import Achievements from '../components/Achievements'
+import Contact from '../components/Contact'
+import Footer from '../components/Footer'
+import { getPortfolio } from '@/lib/actions'
+
+interface PortfolioData {
+  name: string;
+  currentStatus: string;
+  Nav_Section: any;
+  Hero: any;
+  Projects: any;
+  Achievements: any;
+  Contact: any;
+}
+
+export default function Home() {
+  const [portfolioData, setPortfolioData] = useState<PortfolioData | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchPortfolioData = async () => {
+      try {
+        const { story } = await getPortfolio()
+        if (story) {
+          setPortfolioData({
+            name: story.name,
+            currentStatus: story.currentStatus,
+            Nav_Section: story.content.Nav_Section[0],
+            Hero: story.content.Hero[0],
+            Projects: story.content.Projects[0],
+            Achievements: story.content.Achievements[0],
+            Contact: story.content.Contact[0]
+          })
+        }
+      } catch (error) {
+        console.error('Error fetching portfolio data:', error)
+        setError('Failed to load portfolio data. Please try again later.')
+      } finally {
+        setIsLoading(false)
+      }
     }
 
-    return {
-      name: story.name,
-      currentStatus: story.currentStatus,
-      Nav_Section: story.content.Nav_Section[0],
-      Hero: story.content.Hero[0],
-      Projects: story.content.Projects[0],
-      Achievements: story.content.Achievements[0],
-      Contact: story.content.Contact[0]
-    };
-  } catch (error) {
-    console.error('Error fetching portfolio data:', error);
-    return null;
+    fetchPortfolioData()
+  }, [])
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500 mx-auto"></div>
+          <p className="mt-4 text-xl font-semibold text-gray-700">Loading your portfolio...</p>
+        </div>
+      </div>
+    )
   }
-};
 
-export default async function Home() {
-let portfolioData = null;
-  try {
-  const { story } = await getPortfolio();
-  console.log("story", JSON.stringify(story));
- portfolioData = {
-    name: story.name,
-    currentStatus: story.currentStatus,
-    Nav_Section: story.content.Nav_Section[0],
-    Hero: story.content.Hero[0],
-    Projects: story.content.Projects[0],
-    Achievements: story.content.Achievements[0],
-    Contact: story.content.Contact[0]
-  };
-} catch (error) {
-  console.error('Error fetching portfolio data:', error);
-
-}
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="text-center p-8 bg-white rounded-lg shadow-md">
+          <h1 className="text-2xl font-bold text-red-600 mb-4">Oops! Something went wrong</h1>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 transition duration-300"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    )
+  }
 
   if (!portfolioData) {
     return (
@@ -67,13 +96,13 @@ let portfolioData = null;
           </div>
         </div>
       </div>
-    );
+    )
   }
 
   return (
     <>
       <Navbar data={portfolioData.Nav_Section} />
-      <Hero data={portfolioData.Hero} name={portfolioData.name} currentStatus={portfolioData.currentStatus}/>
+      <Hero data={portfolioData.Hero} name={portfolioData.name} currentStatus={portfolioData.currentStatus} />
       <Services data={portfolioData.Projects} />
       <Achievements data={portfolioData.Achievements} />
       <section id="contact">
@@ -81,5 +110,5 @@ let portfolioData = null;
       </section>
       <Footer />
     </>
-  );
+  )
 }
