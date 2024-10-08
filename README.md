@@ -105,6 +105,7 @@ Welcome to the **Dynamic Portfolio Website** – your go-to solution for creatin
      - `MONGO_URL` – Your MongoDB connection string.
      - `ADMIN_USERNAME` – Choose a secure admin username.
      - `ADMIN_PASSWORD` – Choose a strong admin password.
+     - `DB_NAME`- choose a database name 
 
 3. **Access Your Live Portfolio:**
    - Once deployed, navigate to your unique Vercel URL to view your live portfolio.
