@@ -47,7 +47,7 @@ let portfolioData = null;
   };
 } catch (error) {
   console.error('Error fetching portfolio data:', error);
-  return null;
+
 }
 
   if (!portfolioData) {
