@@ -62,24 +62,9 @@ export default function Home() {
     )
   }
 
-  if (error) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <div className="text-center p-8 bg-white rounded-lg shadow-md">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Oops! Something went wrong</h1>
-          <p className="text-gray-600 mb-4">{error}</p>
-          <button 
-            onClick={() => window.location.reload()} 
-            className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 transition duration-300"
-          >
-            Try Again
-          </button>
-        </div>
-      </div>
-    )
-  }
+ 
 
-  if (!portfolioData) {
+  if (!portfolioData || error) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
         <div className="text-center p-8 bg-white rounded-lg shadow-2xl transform transition-all duration-500 hover:scale-105">

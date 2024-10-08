@@ -230,9 +230,9 @@ export default function MultiStepPortfolioForm({ initialData }: PortfolioFormPro
           <div>
             <h3 className="text-2xl font-bold mb-4 text-indigo-700">Hero Section</h3>
             <InputWithIcon icon={Type} label="Title" name="heroTitle" placeholder="Welcome to My Portfolio" />
-            <InputWithIcon icon={Image} label="Picture filename" name="heroPictureFilename" placeholder="hero-image.jpg" />
+            <InputWithIcon icon={Image} label="Picture filename" name="heroPictureFilename" placeholder="relative image path or image url" />
             <TextAreaWithIcon icon={FileText} label="Description" name="heroDescription" placeholder="A brief description of yourself and your skills" />
-            <InputWithIcon icon={Link} label="CTA Button Link" name="heroCTALink" placeholder="https://example.com/contact" />
+            <InputWithIcon icon={Link} label="CTA Button Link" name="heroCTALink" placeholder="https://example.com/resume" />
             <InputWithIcon icon={Type} label="CTA Button Text" name="heroCTAText" placeholder="Get in Touch" />
           </div>
         )
@@ -242,8 +242,8 @@ export default function MultiStepPortfolioForm({ initialData }: PortfolioFormPro
             <h3 className="text-2xl font-bold mb-4 text-green-700">Contact Section</h3>
             <InputWithIcon icon={Mail} label="Email" name="contactEmail" type="email" placeholder="johndoe@example.com" />
             <InputWithIcon icon={Type} label="Title" name="contactTitle" placeholder="Get in Touch" />
-            <InputWithIcon icon={Github} label="GitHub Profile username" name="contactGithub" placeholder="johndoe" />
-            <InputWithIcon icon={Linkedin} label="LinkedIn Profile username" name="contactLinkedin" placeholder="johndoedev" />
+            <InputWithIcon icon={Github} label="GitHub Profile username" name="contactGithub" placeholder="Github Username" />
+            <InputWithIcon icon={Linkedin} label="LinkedIn Profile username" name="contactLinkedin" placeholder="LinkedIn username" />
           </div>
         )
       case 3:
