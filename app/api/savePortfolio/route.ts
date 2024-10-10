@@ -9,8 +9,7 @@ export async function POST(request: Request) {
     const formData = await request.formData()
     const projectCards = JSON.parse(formData.get('projectCards') as string)
     const achievementCards = JSON.parse(formData.get('achievementCards') as string)
-    console.log('projectCards:', projectCards)
-    console.log('achievementCards:', achievementCards)
+
 
     const portfolioData = {
       story: {
@@ -62,7 +61,7 @@ export async function POST(request: Request) {
       upsert: true, 
       setDefaultsOnInsert: true 
     })
-    console.log('Saved portfolio:', JSON.stringify(portfolio, null, 2))
+   
 
     return NextResponse.json({ message: 'Portfolio saved successfully',success:true, portfolio }, { status: 200 })
   } catch (error) {

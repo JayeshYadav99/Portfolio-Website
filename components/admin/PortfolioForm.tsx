@@ -59,9 +59,9 @@ export default function MultiStepPortfolioForm({ initialData }: PortfolioFormPro
     const fetchPortfolioData = async () => {
       try {
         const {story} = await getPortfolio()
-        console.log("story")
+
         if (story) {
-            console.log("story", story);
+      
             reset(
                 {
                 name: story.name,
@@ -99,7 +99,7 @@ export default function MultiStepPortfolioForm({ initialData }: PortfolioFormPro
   }, [reset])
 
   const onSubmit: SubmitHandler<FormInputs> = async (data,event) => {
-    console.log(event)
+
     event?.preventDefault();
     setIsSubmitting(true)
     const formData = new FormData()
@@ -113,14 +113,14 @@ export default function MultiStepPortfolioForm({ initialData }: PortfolioFormPro
 
     try {
      
-        console.log(formData.get("achievementCards"));
+        
       const response = await fetch('/api/savePortfolio', {
         method: 'POST',
         body: formData,
       })
       const result = await response.json()
       if (response.ok) {
-        console.log('Success:', result)
+     
       
         router.push('/')
         // Handle success (e.g., show a success message)

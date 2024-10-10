@@ -11,7 +11,7 @@ const Container = ({ children, className }: { children: React.ReactNode; classNa
 )
 
 const Hero = ({ data,name,currentStatus }: { data: any,name:string ,currentStatus:string}) => {
-  console.log("Name",name)
+
   const { title, description, cta_button_text, picture, cta_button_link } = data
   const controls = useAnimation()
 
