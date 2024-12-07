@@ -25,6 +25,7 @@ const portfolioSchema = new mongoose.Schema({
         project_cards: [{
           title: { type: String, required: true },
           subtitle: { type: String, required: true },
+          category : { type: String, required: true },
           technologies: { type: String, required: true },
           projectLink: { type: String, required: true },
           description: { type: String, required: true },

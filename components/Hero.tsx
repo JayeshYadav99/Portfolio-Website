@@ -48,7 +48,8 @@ const Hero = ({ data,name,currentStatus }: { data: any,name:string ,currentStatu
           >
             <Link
               href={cta_button_link}
-              className="inline-block px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full shadow-lg transition-all duration-300 hover:shadow-xl hover:from-cyan-600 hover:to-blue-600"
+              className="inline-block px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold text-white bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full shadow-lg transition-all duration-300 hover:shadow-xl hover:from-cyan-600 hover:to-blue-600"
+            
             >
               {cta_button_text}
             </Link>
@@ -58,9 +59,9 @@ const Hero = ({ data,name,currentStatus }: { data: any,name:string ,currentStatu
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="w-full lg:w-1/2  lg:mt-0"
+          className="w-full lg:w-1/2 sm:mt-4 lg:mt-0"
         >
-          <ProfileWithTooltip picture={picture} controls={controls} name={name} currentStatus={currentStatus} />
+          <ProfileWithTooltip picture={picture} name={name} currentStatus={currentStatus} />
         </motion.div>
       </Container>
 
@@ -88,53 +89,28 @@ const Hero = ({ data,name,currentStatus }: { data: any,name:string ,currentStatu
   )
 }
 
-const ProfileWithTooltip = ({ picture, controls ,name,currentStatus}: { picture: any, controls: any,name:string,currentStatus:string }) => {
+const ProfileWithTooltip = ({ picture ,name,currentStatus}: { picture: any,name:string,currentStatus:string }) => {
   const [isTooltipVisible, setTooltipVisible] = useState(false)
 
-  const technologies = [
-    { name: 'Frontend', icon: Code, color: 'text-cyan-400' },
-    { name: 'Backend', icon: Server, color: 'text-purple-400' },
-    { name: 'Database', icon: Database, color: 'text-green-400' },
-    { name: 'Cloud', icon: Cloud, color: 'text-blue-400' },
-    { name: 'DevOps', icon: Terminal, color: 'text-red-400' },
-    { name: 'AI/ML', icon: Cpu, color: 'text-yellow-400' },
-  ]
 
   return (
-    <div className="relative">
+    <div className="relative ">
       <motion.div
-        className="relative w-64 h-64 md:w-80 md:h-80 mx-auto"
+        className="relative w-64 h-64 md:w-80 md:h-80 mx-auto "
         whileHover={{ scale: 1.05 }}
         onHoverStart={() => setTooltipVisible(true)}
         onHoverEnd={() => setTooltipVisible(false)}
       >
-        <motion.div
-          animate={controls}
-          className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full opacity-20 blur-2xl"
-        ></motion.div>
+     
         <Image
           src={picture.filename}
           layout="fill"
-          className="rounded-full object-cover shadow-2xl relative z-10 p-4"
+          className="rounded-full object-cover shadow-2xl relative z-10   border-yellow-200 border-4"
           alt="Profile Picture"
           loading="eager"
         />
-        <motion.div
-          className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400 to-purple-600 opacity-0"
-          whileHover={{ opacity: 0.3 }}
-          transition={{ duration: 0.3 }}
-        />
-        {technologies.map((tech, index) => (
-          <motion.div
-            key={tech.name}
-            className={`absolute ${getPositionClass(index, technologies.length)} z-30`}
-            whileHover={{ scale: 0.6, boxShadow: "0 0 15px rgba(255, 255, 255, 0.5)" }}
-          >
-            <div className="bg-gray-800 bg-opacity-80 backdrop-blur-sm rounded-full shadow-lg p-2">
-              <tech.icon className={`w-6 h-6 ${tech.color}`} />
-            </div>
-          </motion.div>
-        ))}
+
+      
       </motion.div>
       <motion.div
         initial={{ opacity: 0, y: 10 }}

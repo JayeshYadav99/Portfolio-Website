@@ -2,7 +2,9 @@
 import mongoose from 'mongoose';
 const connection :{isConnected?: number} = {  }; 
  export async function dbConnect() {
+console.log('connecting to database');
     if (connection.isConnected) {
+        console.log('using existing database connection');
         return;
     }
 
@@ -10,6 +12,7 @@ const connection :{isConnected?: number} = {  };
         dbName: process.env.DB_NAME,
         bufferCommands: false,
     });
+console.log('database connected');
     connection.isConnected = db.connections[0].readyState;
  
 }

@@ -82,7 +82,7 @@ export async function getPortfolio() {
   try {
     await dbConnect();
 
-    const portfolio = await Portfolio.findOne().sort({createdAt:-1}).lean();
+    const portfolio = await Portfolio.findOne().lean();
 
     if (!portfolio) {
       throw new Error("No portfolio found");
@@ -92,7 +92,7 @@ export async function getPortfolio() {
     }
 
     const { story } = portfolio;
-    return { story };
+    return JSON.parse(JSON.stringify({ story }));
   } catch (error) {
     console.error("Failed to fetch portfolio:", error);
     throw new Error("Failed to fetch portfolio");

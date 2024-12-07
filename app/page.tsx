@@ -29,6 +29,7 @@ export default function Home() {
     const fetchPortfolioData = async () => {
       try {
         const { story } = await getPortfolio()
+        console.log(story)
         if (story) {
           setPortfolioData({
             name: story.name,

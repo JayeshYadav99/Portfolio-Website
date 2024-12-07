@@ -1,77 +1,80 @@
-'use client'
+import VerticalTimeline from './VerticalTimeline';
+import HackathonCounter from './HackathonCounter';
+const timelineEvents = [
+  {
+    date: "April 2023",
+    title: "ChatHacks",
 
-import { useState } from 'react'
-import Image from "next/image"
-import { motion } from 'framer-motion'
-
-const Achievements = ({ data }: any) => {
-  const { title, Achievement_cards } = data
-
+    logo: "https://a.storyblok.com/f/271727/338x374/f49ae252c8/laughhub.PNG",
+    position: "1st Place",
+    description: "Secured 1st place, showcasing effective teamwork and problem-solving abilities using ALAN AI to elevate our project.",
+    isLatest: true,
+    downloadLink: "#"
+  },
+  {
+    date: "Jun 2023",
+    title: "Hack Your Portfolio",
+    logo: "https://a.storyblok.com/f/271727/352x390/f7d810cb83/portfoliohub.PNG",
+    position: "Best Domain Name from Domain.com",
+    description: "Developed a dynamic portfolio website using modern React technologies and advanced web development practices.",
+  },
+  
+  
+  {
+    date: "Feb 2024",
+    title: "HackthisFall",
+    hackathonName: "Vonage API Challenge",
+    logo: "/img/Vonage.jpg",
+    position: "Best Use of Vonage APIs",
+    description: "Awarded for best project utilizing Vonage Video API to enable live translated captions during video calls.",
+  },
+  {
+    date: "April 2024",
+    title: "Code Unnati Innovation Marathon 2.0",
+    logo: "/img/SamvaadSynctdemo.png",
+    position: "Top 25 Finalist",
+    description: "Presented Project SaamvaadSync, enhancing our presentation skills and ability to communicate complex technical ideas.",
+  },
+  {
+    date: "Sept 2024",
+    title: "Hack The Mountains",
+    logo: "/img/HackTheMountain.png",
+    position: "Best Use of Lemme Build",
+    description: "Built Cyber Saarthi, an AI-powered platform to help scam victims report incidents and generate reports for authorities ",
+  },
+  {
+    date: "Nov 2024",
+    title: "HackthisFall -Virtual Edition",
+    logo: "/img/HTFV.png",
+    position: "Best Use of Auth0",
+    description: "Nutrilyz – a personalized food scanner app designed to help individuals with chronic conditions or dietary restrictions make safe and informed food choices",
+  },
+  {
+    date: "Dec 2024",
+    title: "Hack The Frost",
+    logo: "/img/HF.png",
+    position: "Best Sustainability Award",
+    description: "Introducing AidConnect – an AI-powered disaster response platform thatCollects and analyzes real-time data ,Visualizes critical information to prioritize victims, Streamlines aid delivery",
+  },
+];
+const hackathonLogos = [
+  "/img/mlh.png",
+  "/img/htf.png",
+  "/img/code.jpeg",
+  "/img/frost.png",
+  "/img/htm.jpeg",
+];
+export default function Home() {
+  const totalHackathonsWon = timelineEvents.length;
   return (
-    <section className="px-6 sm:px-12 lg:px-24 bg-gradient-to-b from-zinc-950 to-zinc-900 pt-24 pb-32 overflow-hidden">
-      <motion.h2 
-        className="text-5xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600 mb-20"
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        {title}
-      </motion.h2>
-      <div className="grid gap-10 lg:grid-cols-2 xl:grid-cols-2">
-        {Achievement_cards.map((t: any, index: number) => (
-          <AchievementCard data={t} key={t.name} index={index} />
-        ))}
+    <main className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 p-4 ">
+      <h1 className="text-4xl font-bold mb-8 text-gray-900 dark:text-white text-center">Achievements</h1>
+     
+      <HackathonCounter count={totalHackathonsWon} logos={hackathonLogos} />
+      <div className=" mx-auto rounded-lg  shadow-lg p-6 sm:p-8">
+        <VerticalTimeline events={timelineEvents} />
       </div>
-    </section>
-  )
+    </main>
+  );
 }
 
-const AchievementCard = ({ data, index }: any) => {
-  const { picture, name, comment } = data
-  const [isHovered, setIsHovered] = useState(false)
-
-  return (
-    <motion.div 
-      className="lg:col-span-2 xl:col-auto"
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-    >
-      <motion.div 
-        className="flex flex-col justify-between w-full h-full p-8 rounded-2xl shadow-lg bg-gradient-to-br from-neutral-800 to-neutral-900 border border-purple-500/20 transform transition-all duration-300"
-        whileHover={{ scale: 1.03, boxShadow: "0 0 20px rgba(168, 85, 247, 0.4)" }}
-        onHoverStart={() => setIsHovered(true)}
-        onHoverEnd={() => setIsHovered(false)}
-      >
-        <p className="text-lg leading-relaxed text-gray-300 mb-6">{comment}</p>
-        <Avatar image={picture.filename} name={name} isHovered={isHovered} />
-      </motion.div>
-    </motion.div>
-  )
-}
-
-const Avatar = ({ image, name, isHovered }: any) => {
-  return (
-    <motion.div 
-      className="flex items-center mt-4 space-x-4"
-      animate={{ x: isHovered ? 10 : 0 }}
-      transition={{ duration: 0.3 }}
-    >
-      <div className="flex-shrink-0 overflow-hidden rounded-full w-16 h-16 border-2 border-purple-500 shadow-lg shadow-purple-500/50">
-        <Image src={image} width="100" height="100" alt={`Avatar of ${name}`} className="object-cover w-full h-full" />
-      </div>
-      <div>
-        <motion.div 
-          className="text-xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600"
-          animate={{ scale: isHovered ? 1.1 : 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          {name}
-        </motion.div>
-        <div className="text-sm text-gray-400">Hackathon Winner</div>
-      </div>
-    </motion.div>
-  )
-}
-
-export default Achievements
