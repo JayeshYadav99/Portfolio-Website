@@ -23,7 +23,7 @@ const timelineEvents = [
   {
     date: "Feb 2024",
     title: "HackthisFall",
-    hackathonName: "Vonage API Challenge",
+
     logo: "/img/Vonage.jpg",
     position: "Best Use of Vonage APIs",
     description: "Awarded for best project utilizing Vonage Video API to enable live translated captions during video calls.",

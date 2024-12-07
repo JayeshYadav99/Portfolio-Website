@@ -39,9 +39,7 @@ const VerticalTimeline: React.FC<VerticalTimelineProps> = ({ events }) => {
             }`}>
               <div className={`flex-1 ${index % 2 === 0 ? 'pl-4' : 'pr-4'}`}>
                 <h3 className="text-xl font-bold text-white mb-2">{event.title}</h3>
-                {event.hackathonName && (
-                  <p className="text-gray-400 text-sm mb-2">{event.hackathonName}</p>
-                )}
+               
                 {event.position && (
                   <p className="text-green-400 font-semibold mb-2">{event.position}</p>
                 )}
