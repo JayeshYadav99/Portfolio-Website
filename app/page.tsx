@@ -90,7 +90,7 @@ export default function Home() {
       <Navbar data={portfolioData.Nav_Section} />
       <Hero data={portfolioData.Hero} name={portfolioData.name} currentStatus={portfolioData.currentStatus} />
       <Services data={portfolioData.Projects} />
-      <Achievements data={portfolioData.Achievements} />
+      <Achievements  />
       <section id="contact">
         <Contact data={portfolioData.Contact} />
       </section>
