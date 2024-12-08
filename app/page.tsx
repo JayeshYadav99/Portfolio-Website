@@ -10,8 +10,10 @@ export default async function Home() {
   const domain = getDomain(headersList);
   const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
   const apiUrl = `${protocol}://${domain}`;
+
   const response = await fetch(`${apiUrl}/api/getPortfolio`, {
     cache: "force-cache",
+    next: { tags: ['portfolio'] }
   });
   const { story } = await response.json();
   const { name, currentStatus } = story;
