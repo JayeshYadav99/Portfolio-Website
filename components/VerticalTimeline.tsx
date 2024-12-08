@@ -34,7 +34,7 @@ const VerticalTimeline: React.FC<VerticalTimelineProps> = ({ events }) => {
           transition={{ duration: 0.5, delay: index * 0.1 }}
         >
           <div className="w-5/12">
-            <div className={`bg-gray-900 p-6 rounded-lg shadow-lg border border-gray-800 flex ${
+            <div className={`bg-gray-900 p-6 rounded-lg shadow-lg border.3 border-gray-800 flex ${
               index % 2 === 0 ? 'flex-row-reverse' : ''
             }`}>
               <div className={`flex-1 ${index % 2 === 0 ? 'pl-4' : 'pr-4'}`}>

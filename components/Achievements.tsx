@@ -18,8 +18,6 @@ const timelineEvents = [
     position: "Best Domain Name from Domain.com",
     description: "Developed a dynamic portfolio website using modern React technologies and advanced web development practices.",
   },
-  
-  
   {
     date: "Feb 2024",
     title: "HackthisFall",
