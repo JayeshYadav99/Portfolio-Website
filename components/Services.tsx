@@ -14,7 +14,7 @@ const Projects = ({ data }: { data: any }) => {
   const filteredProjects = project_cards.filter((project: any) =>
     selectedCategory === 'All' ? true : project.category === selectedCategory
   )
-
+console.log(filteredProjects)
   return (
     <section className="relative py-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gray-900">
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 opacity-50"></div>
