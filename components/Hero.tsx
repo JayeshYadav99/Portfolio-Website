@@ -10,7 +10,7 @@ const Container = ({ children, className }: { children: React.ReactNode; classNa
   <div className={`container mx-auto px-4 sm:px-6 lg:px-8 ${className}`}>{children}</div>
 )
 
-const Hero = ({ data,name,currentStatus }: { data: any,name:string ,currentStatus:string}) => {
+const Hero = ({ data, name, currentStatus }: { data: any, name: string, currentStatus: string }) => {
 
   const { title, description, cta_button_text, picture, cta_button_link } = data
   const controls = useAnimation()
@@ -27,21 +27,21 @@ const Hero = ({ data,name,currentStatus }: { data: any,name:string ,currentStatu
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjMDAwMDAwMjAiPjwvcmVjdD4KPHBhdGggZD0iTTAgNUw1IDBaTTYgNEw0IDZaTS0xIDFMMSAtMVoiIHN0cm9rZT0iIzAwMDAwMDQwIiBzdHJva2Utd2lkdGg9IjEiPjwvcGF0aD4KPC9zdmc+')] opacity-20"></div>
 
       <Container className="flex flex-wrap items-center py-16 md:py-24 lg:py-32 relative z-10">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="w-full lg:w-1/2 lg:pr-12"
         >
-         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-400">
-  {title}
-</h1>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-normal tracking-tighter mb-6  pb-1  bg-clip-text text-transparent  overflow-visible  bg-gradient-to-r from-cyan-400 to-purple-400">
+            {title}
+          </h1>
 
-<div className="max-h-60 overflow-y-auto pr-4 mb-8">
-  <p className="text-lg md:text-xl leading-relaxed text-gray-300">
-    {description}
-  </p>
-</div>
+          <div className="max-h-60 overflow-y-auto pr-4 mb-8">
+            <p className="text-lg md:text-xl leading-relaxed text-gray-300">
+              {description}
+            </p>
+          </div>
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -49,13 +49,13 @@ const Hero = ({ data,name,currentStatus }: { data: any,name:string ,currentStatu
             <Link
               href={cta_button_link}
               className="inline-block px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold text-white bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full shadow-lg transition-all duration-300 hover:shadow-xl hover:from-cyan-600 hover:to-blue-600"
-            
+
             >
               {cta_button_text}
             </Link>
           </motion.div>
         </motion.div>
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -89,7 +89,7 @@ const Hero = ({ data,name,currentStatus }: { data: any,name:string ,currentStatu
   )
 }
 
-const ProfileWithTooltip = ({ picture ,name,currentStatus}: { picture: any,name:string,currentStatus:string }) => {
+const ProfileWithTooltip = ({ picture, name, currentStatus }: { picture: any, name: string, currentStatus: string }) => {
   const [isTooltipVisible, setTooltipVisible] = useState(false)
 
 
@@ -101,7 +101,7 @@ const ProfileWithTooltip = ({ picture ,name,currentStatus}: { picture: any,name:
         onHoverStart={() => setTooltipVisible(true)}
         onHoverEnd={() => setTooltipVisible(false)}
       >
-     
+
         <Image
           src={picture.filename}
           layout="fill"
@@ -110,7 +110,7 @@ const ProfileWithTooltip = ({ picture ,name,currentStatus}: { picture: any,name:
           loading="eager"
         />
 
-      
+
       </motion.div>
       <motion.div
         initial={{ opacity: 0, y: 10 }}
